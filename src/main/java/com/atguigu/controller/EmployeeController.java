@@ -39,17 +39,33 @@ public class EmployeeController {
     @PostMapping("/emp")
     public String addEmp(Employee employee) {
 
-        System.out.println(employee);
+        //System.out.println(employee);
         employeeDao.save(employee);
         return "redirect:/emps";
     }
 
     @GetMapping("/emp/{id}")
-    public String updateEmp(@PathVariable("id") Integer id, Model model){
+    public String toUpdateEmp(@PathVariable("id") Integer id, Model model){
         Employee employee = employeeDao.get(id);
         Department department = employee.getDepartment();
         model.addAttribute("depts", department);
         model.addAttribute("emp", employee);
         return "emp/add";
     }
+
+    @PutMapping("/emp")
+    public String updateEmp(Employee employee) {
+        employeeDao.save(employee);
+        //System.out.println(employee);
+        return "redirect:/emps";
+    }
+
+    @DeleteMapping("/emp/{id}")
+    public String delEmp(@PathVariable("id") Integer id) {
+        employeeDao.delete(id);
+        return "redirect:/emps";
+    }
+
+
+
 }
